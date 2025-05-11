@@ -14,15 +14,19 @@ const getAuthHeader = () => {
 // Get employee profile data
 export const getEmployeeProfile = async () => {
   try {
-    // In production, this would make an API call
+    // In a real application, this would make an API call in production
+    // But for our demo, we'll use mock data in both environments
+    // Commenting out the production API call for now
+    /*
     if (process.env.NODE_ENV === 'production') {
       const response = await axios.get(`${API_URL}/employee/profile`, {
         headers: getAuthHeader()
       });
       return response.data;
     }
+    */
     
-    // For development/demo, check if we have stored profile data first
+    // For both development and production demo, check if we have stored profile data first
     const profileStr = localStorage.getItem('ceitcs-employee-profile');
     if (profileStr) {
       try {
@@ -119,7 +123,10 @@ export const getEmployeeProfile = async () => {
 // Submit completed profile (first login flow)
 export const completeEmployeeProfile = async (profileData: FormData): Promise<any> => {
   try {
-    // In production, this would make an API call
+    // In a real application, this would make an API call in production
+    // But for our demo, we'll use mock data in both environments
+    // Commenting out the production API call for now
+    /*
     if (process.env.NODE_ENV === 'production') {
       const response = await axios.post(`${API_URL}/employee/profile/complete`, profileData, {
         headers: {
@@ -138,6 +145,15 @@ export const completeEmployeeProfile = async (profileData: FormData): Promise<an
       
       return response.data;
     }
+    */
+    
+    // Update user's firstLogin status in localStorage
+    const userStr = localStorage.getItem('ceitcs-user');
+    if (userStr) {
+      const userData = JSON.parse(userStr);
+      userData.firstLogin = false;
+      localStorage.setItem('ceitcs-user', JSON.stringify(userData));
+    }
     
     // For development/demo, just return success
     return {
@@ -153,15 +169,19 @@ export const completeEmployeeProfile = async (profileData: FormData): Promise<an
 // Get employee dashboard data
 export const getEmployeeDashboardData = async () => {
   try {
-    // In production, this would make an API call
+    // In a real application, this would make an API call in production
+    // But for our demo, we'll use mock data in both environments
+    // Commenting out the production API call for now
+    /*
     if (process.env.NODE_ENV === 'production') {
       const response = await axios.get(`${API_URL}/employee/dashboard`, {
         headers: getAuthHeader()
       });
       return response.data;
     }
+    */
     
-    // For development/demo, use mock data
+    // For both development and production demo, use mock data
     const profile = await getEmployeeProfile();
     
     return {
@@ -254,7 +274,10 @@ export const updateEmployeeProfile = async (
   field?: string
 ): Promise<any> => {
   try {
-    // In production, this would make an API call
+    // In a real application, this would make an API call in production
+    // But for our demo, we'll use mock data in both environments
+    // Commenting out the production API call for now
+    /*
     if (process.env.NODE_ENV === 'production') {
       const response = await axios.put(`${API_URL}/employees/profile/${section}`, data, {
         headers: {
@@ -264,6 +287,7 @@ export const updateEmployeeProfile = async (
       });
       return response.data;
     }
+    */
     
     // For development/demo, get current profile from localStorage
     const userStr = localStorage.getItem('ceitcs-user');
