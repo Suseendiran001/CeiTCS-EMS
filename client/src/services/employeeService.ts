@@ -398,13 +398,17 @@ export const cancelLeaveRequest = async (leaveId: string) => {
 // Get employee documents
 export const getEmployeeDocuments = async (token?: string) => {
   try {
-    // In production, this would make an API call
+    // In a real application, this would make an API call in production
+    // But for our demo, we'll use mock data in both environments
+    // Commenting out the production API call for now
+    /*
     if (process.env.NODE_ENV === 'production') {
       const response = await axios.get(`${API_URL}/employee/documents`, {
         headers: token ? { Authorization: `Bearer ${token}` } : getAuthHeader()
       });
       return response.data;
     }
+    */
     
     // For development/demo, first check if we have stored profile data
     const profileStr = localStorage.getItem('ceitcs-employee-profile');
@@ -502,7 +506,10 @@ export const getEmployeeDocuments = async (token?: string) => {
 // Upload employee document
 export const uploadDocument = async (documentType: string, file: File): Promise<any> => {
   try {
-    // In production, this would make an API call with FormData
+    // In a real application, this would make an API call in production
+    // But for our demo, we'll use mock data in both environments
+    // Commenting out the production API call for now
+    /*
     if (process.env.NODE_ENV === 'production') {
       const formData = new FormData();
       formData.append('file', file);
@@ -516,6 +523,7 @@ export const uploadDocument = async (documentType: string, file: File): Promise<
       });
       return response.data;
     }
+    */
     
     // For development/demo, just return success
     return {
@@ -571,13 +579,17 @@ export const createEmployee = async (employeeData: FormData) => {
 // Get employee communications
 export const getEmployeeCommunications = async () => {
   try {
-    // In production, this would make an API call
+    // In a real application, this would make an API call in production
+    // But for our demo, we'll use mock data in both environments
+    // Commenting out the production API call for now
+    /*
     if (process.env.NODE_ENV === 'production') {
       const response = await axios.get(`${API_URL}/employee/communications`, {
         headers: getAuthHeader()
       });
       return response.data;
     }
+    */
     
     // For development/demo, use mock data
     return {
@@ -635,13 +647,17 @@ export const getEmployeeCommunications = async () => {
 // Mark communication as read
 export const markCommunicationAsRead = async (communicationId: string) => {
   try {
-    // In production, this would make an API call
+    // In a real application, this would make an API call in production
+    // But for our demo, we'll use mock data in both environments
+    // Commenting out the production API call for now
+    /*
     if (process.env.NODE_ENV === 'production') {
       const response = await axios.post(`${API_URL}/employee/communications/${communicationId}/read`, {}, {
         headers: getAuthHeader()
       });
       return response.data;
     }
+    */
     
     // For development/demo, just return success
     return {
