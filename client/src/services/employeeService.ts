@@ -554,6 +554,10 @@ export const createEmployee = async (employeeData: FormData) => {
       dateOfJoin: employeeData.get("dateOfJoin")
     });
     
+    // In a real application, this would make an API call in production
+    // But for our demo, we'll use mock data in both environments
+    // Commenting out the production API call for now
+    /*
     // Always send to the backend API
     const response = await axios.post(`${API_URL}/employees`, employeeData, {
       headers: {
@@ -564,6 +568,23 @@ export const createEmployee = async (employeeData: FormData) => {
     
     console.log("Employee created successfully:", response.data);
     return response.data;
+    */
+    
+    // For demo purposes, simulate a successful response
+    return {
+      success: true,
+      message: "Employee created successfully",
+      employee: {
+        id: "EMP" + Date.now(),
+        firstName: employeeData.get("firstName"),
+        lastName: employeeData.get("lastName"),
+        email: employeeData.get("email"),
+        employeeType: employeeData.get("employeeType"),
+        department: employeeData.get("department"),
+        position: employeeData.get("position"),
+        dateOfJoin: employeeData.get("dateOfJoin")
+      }
+    };
   } catch (error: any) {
     console.error('Error creating employee:', error);
     
@@ -673,7 +694,10 @@ export const markCommunicationAsRead = async (communicationId: string) => {
 // Change password
 export const changePassword = async (currentPassword: string, newPassword: string) => {
   try {
-    // In production, this would make an API call
+    // In a real application, this would make an API call in production
+    // But for our demo, we'll use mock data in both environments
+    // Commenting out the production API call for now
+    /*
     if (process.env.NODE_ENV === 'production') {
       const response = await axios.post(`${API_URL}/employee/change-password`, {
         currentPassword,
@@ -683,6 +707,7 @@ export const changePassword = async (currentPassword: string, newPassword: strin
       });
       return response.data;
     }
+    */
     
     // For development/demo, just return success
     return {
@@ -698,13 +723,17 @@ export const changePassword = async (currentPassword: string, newPassword: strin
 // Update notification settings
 export const updateNotificationSettings = async (settings: any) => {
   try {
-    // In production, this would make an API call
+    // In a real application, this would make an API call in production
+    // But for our demo, we'll use mock data in both environments
+    // Commenting out the production API call for now
+    /*
     if (process.env.NODE_ENV === 'production') {
       const response = await axios.post(`${API_URL}/employee/settings/notifications`, settings, {
         headers: getAuthHeader()
       });
       return response.data;
     }
+    */
     
     // For development/demo, just return success
     return {
@@ -720,13 +749,17 @@ export const updateNotificationSettings = async (settings: any) => {
 // Update security settings
 export const updateSecuritySettings = async (settings: any) => {
   try {
-    // In production, this would make an API call
+    // In a real application, this would make an API call in production
+    // But for our demo, we'll use mock data in both environments
+    // Commenting out the production API call for now
+    /*
     if (process.env.NODE_ENV === 'production') {
       const response = await axios.post(`${API_URL}/employee/settings/security`, settings, {
         headers: getAuthHeader()
       });
       return response.data;
     }
+    */
     
     // For development/demo, just return success
     return {
@@ -745,10 +778,33 @@ export const getProfileCompletionStatus = async (): Promise<{
   completedSections: string[];
 }> => {
   try {
-    const response = await axios.get(`${API_URL}/employees/profile/completion-status`, {
-      headers: getAuthHeader()
-    });
-    return response.data;
+    // In a real application, this would make an API call
+    // But for our demo, we'll mock the response
+    
+    // Get profile from localStorage if available
+    const profileStr = localStorage.getItem('ceitcs-employee-profile');
+    if (profileStr) {
+      const profile = JSON.parse(profileStr);
+      
+      // Determine which sections are complete
+      const completedSections = [];
+      if (profile.firstName && profile.lastName) completedSections.push('personalInfo');
+      if (profile.currentAddress) completedSections.push('addresses');
+      if (profile.emergencyContact) completedSections.push('emergencyContact');
+      if (profile.education) completedSections.push('education');
+      if (profile.bankDetails) completedSections.push('bankDetails');
+      
+      return {
+        isComplete: completedSections.length >= 5,
+        completedSections
+      };
+    }
+    
+    // Default response if no profile found
+    return {
+      isComplete: false,
+      completedSections: []
+    };
   } catch (error) {
     console.error(`Error fetching profile completion status:`, error);
     throw error;
@@ -758,10 +814,13 @@ export const getProfileCompletionStatus = async (): Promise<{
 // Get all employees for admin
 export const getAllEmployees = async () => {
   try {
-    const response = await axios.get(`${API_URL}/employees`, {
-      headers: getAuthHeader()
-    });
-    return response.data.data;
+    // In a real application, this would make an API call
+    // But for our demo, we'll use mock data
+    
+    // Import mock employees data
+    const { MOCK_EMPLOYEES } = await import('@/data/mockData');
+    
+    return MOCK_EMPLOYEES;
   } catch (error) {
     console.error('Error fetching all employees:', error);
     throw error;
